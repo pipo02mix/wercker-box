@@ -15,6 +15,7 @@
       - python
       - python-setuptools
       - python-software-properties
+      - ruby1.9.3
       - rubygems
       - unzip
       - zip
@@ -46,7 +47,7 @@
   - name: install php55 apt repo
     apt_repository: repo=ppa:ondrej/php5 state=present
 
-  - name: install php5.4
+  - name: install php5.5
     apt: name={{ item }} state=present update_cache=yes
     with_items:
       - php5

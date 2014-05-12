@@ -9,7 +9,7 @@ keywords:
   - nodejs
   - grunt-cli
   - bower
-  - ruby
+  - ruby1.9.3
   - bundler
   - php55
   - composer
