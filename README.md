@@ -1,5 +1,5 @@
 # Astonish Design standard Wercker Box
-[![wercker status](https://app.wercker.com/status/da62deaa330891af10ea369d2ce48339/m/ "wercker status")](https://app.wercker.com/project/bykey/da62deaa330891af10ea369d2ce48339)
+[![wercker status](https://app.wercker.com/status/4329fbc9697ed55ed80b55320ad44d80/m "wercker status")](https://app.wercker.com/project/bykey/4329fbc9697ed55ed80b55320ad44d80)
 
 Provisioned with Ansible
 
@@ -8,6 +8,6 @@ Includes:
 - grunt-cli
 - ruby
 - bundler
-- php5.4
+- php5.5
 - composer
 - mongoDB
