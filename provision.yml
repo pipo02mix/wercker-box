@@ -15,13 +15,15 @@
       - python
       - python-setuptools
       - python-software-properties
-      - ruby1.9.3
       - rubygems
       - unzip
       - zip
 
   - name: install node apt repo
     apt_repository: repo=ppa:chris-lea/node.js state=present
+
+  - name: install ruby1.9.3
+      apt: pkg=ruby1.9.3 state=present update_cache=yes
 
   - name: install node
     apt: pkg=nodejs state=present update_cache=yes
@@ -44,7 +46,7 @@
   - name: mongodb | install
     apt: pkg=mongodb-10gen=2.4.10 state=installed update_cache=yes
 
-  - name: install php55 apt repo
+  - name: install php5.5 apt repo
     apt_repository: repo=ppa:ondrej/php5 state=present
 
   - name: install php5.5
