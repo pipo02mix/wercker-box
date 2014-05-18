@@ -1,5 +1,5 @@
 name: astonish-wercker-box
-version: 0.0.5
+version: 0.0.6
 inherits: wouter/ubuntu12.04-ansible@0.0.2
 type: main
 platform: ubuntu@12.04
@@ -19,6 +19,12 @@ packages:
 script: |
   sudo apt-get update
   sudo apt-get install git build-essential python-jinja2 python-paramiko python-apt python-yaml -y
+
+  sudo apt-get install ruby 1.9.3
+  cd /etc/alternatives
+  sudo ln -sf /usr/bin/ruby1.9.3 ruby
+  cd -
+
   git clone git://github.com/ansible/ansible.git
   cd ansible
   git checkout v1.4.5

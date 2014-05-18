@@ -15,15 +15,11 @@
       - python
       - python-setuptools
       - python-software-properties
-      - rubygems
       - unzip
       - zip
 
   - name: install node apt repo
     apt_repository: repo=ppa:chris-lea/node.js state=present
-
-  - name: install ruby1.9.3
-    apt: pkg=ruby1.9.3 state=present update_cache=yes
 
   - name: install node
     apt: pkg=nodejs state=present update_cache=yes
@@ -98,3 +94,6 @@
 
   - name: enable mongoDB php driver
     command: php5enmod mongo
+
+  - name: check version of ruby
+    command: ruby -v
