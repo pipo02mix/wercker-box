@@ -1,35 +1,28 @@
-name: astonish-wercker-box
+name: cobrowser-v3-wercker-box
 version: 0.0.6
 inherits: wouter/ubuntu12.04-ansible@0.0.2
 type: main
 platform: ubuntu@12.04
-description: Astonish Design standard Wercker Box
+description: Cobrowser v3 standard Wercker Box
 keywords:
-  - ansible
   - nodejs
-  - grunt-cli
-  - bower
-  - ruby1.9.3
-  - bundler
   - php55
   - composer
-  - mongoDB
 packages:
   - ansible@1.4.5
 script: |
   sudo apt-get update
   sudo apt-get install git build-essential python-jinja2 python-paramiko python-apt python-yaml -y
 
+  sudo apt-get update
+  sudo apt-get install build-essential chrpath git-core libssl-dev libfontconfig1-dev
+  git clone git://github.com/ariya/phantomjs.git
+  cd phantomjs
+  git checkout 1.9
+  ./build.sh
+
   sudo apt-get install ruby 1.9.3
   cd /etc/alternatives
   sudo ln -sf /usr/bin/ruby1.9.3 ruby
   cd -
 
-  git clone git://github.com/ansible/ansible.git
-  cd ansible
-  git checkout v1.4.5
-  sudo make install
-  type ansible || { echo "ansible not found"; exit 1; }
-  cd -
-
-  sudo ansible-playbook -v provision.yml -i inventory -c local
