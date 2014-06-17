@@ -1,6 +1,6 @@
 name: cobrowser-v3-wercker-box
-version: 0.0.6
-inherits: wouter/ubuntu12.04-ansible@0.0.2
+version: 0.0.1
+inherits: wercker/ubuntu12.04-webessentials@0.0.3
 type: main
 platform: ubuntu@12.04
 description: Cobrowser v3 standard Wercker Box
@@ -11,18 +11,60 @@ keywords:
 packages:
   - ansible@1.4.5
 script: |
-  sudo apt-get update
-  sudo apt-get install git build-essential python-jinja2 python-paramiko python-apt python-yaml -y
 
   sudo apt-get update
-  sudo apt-get install build-essential chrpath git-core libssl-dev libfontconfig1-dev
-  git clone git://github.com/ariya/phantomjs.git
-  cd phantomjs
-  git checkout 1.9
-  ./build.sh
 
-  sudo apt-get install ruby 1.9.3
-  cd /etc/alternatives
-  sudo ln -sf /usr/bin/ruby1.9.3 ruby
-  cd -
+  # node.js
+  export NODEVERSION=0.10.26
+  sudo apt-get install -y wget build-essential
+  cd $HOME
+  mkdir nodeinstall
+  cd nodeinstall
+  wget http://nodejs.org/dist/v$NODEVERSION/node-v$NODEVERSION.tar.gz
+  tar xzf node-v$NODEVERSION.tar.gz
+  cd node-v$NODEVERSION
+  ./configure
+  make
+  sudo make install > /dev/null
+  cd $HOME
+  rm -fr nodeinstall
+  node -v
 
+  # phantomjs
+  wget https://phantomjs.googlecode.com/files/phantomjs-1.9.2-linux-x86_64.tar.bz2
+  tar xfj phantomjs-1.9.2-linux-x86_64.tar.bz2
+  sudo cp phantomjs-1.9.2-linux-x86_64/bin/phantomjs /usr/local/bin
+
+  # Update
+  sudo apt-get update
+
+  # Install base packages
+  sudo apt-get install -y curl wget unzip ack-grep git
+  sudo apt-get install software-properties-common
+  sudo apt-get install apt-file && apt-file update
+
+  sudo apt-get update
+
+  # Edit environment path
+  echo 'export PATH="/usr/local/bin:$PATH"' >> $HOME/.bash_profile
+
+  sudo add-apt-repository -y ppa:ondrej/php5
+
+  sudo apt-key update
+  sudo apt-get update
+
+  # Install PHP
+  sudo apt-get install --force-yes -y php5-cli php5-fpm php5-mysql php5-pgsql php5-sqlite php5-curl php5-gd php5-gmp php5-mcrypt php5-xdebug php5-memcached php5-imagick php5-intl
+
+  # Install Composer
+  curl -sS https://getcomposer.org/installer | php
+  sudo mv composer.phar /usr/local/bin/composer
+
+  sudo composer self-update
+
+  # sudo composer global require "phpunit/phpunit:4.0.*"
+
+  # PHP Unit
+  sudo wget https://phar.phpunit.de/phpunit.phar
+  sudo chmod +x phpunit.phar
+  sudo mv phpunit.phar /usr/local/bin/phpunit
